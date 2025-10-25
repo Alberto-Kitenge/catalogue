@@ -23,12 +23,6 @@ class PostController extends Controller
 
     public function postsByTag(Tag $tag): View
     {
-        // $posts_tags = $tag->posts->latest()->paginate(5);
-
-        /* $posts_tags = Post::whereRelation(
-            'tags', 'tags.id', $tag->id
-        )->latest()->paginate(5); */
-
         return $this->postsView(['tag' => $tag]);
     }
 

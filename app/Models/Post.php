@@ -39,7 +39,7 @@ class Post extends Model
 
         if (isset($filters['tag'])) {
             $query->whereRelation(
-                'tags', 'tag.id', $filters['tag']->id ?? $filters['tag']
+                'tags', 'tags.id', $filters['tag']->id ?? $filters['tag']
             );
         }
     }
