@@ -6,12 +6,21 @@
         <img class="w-full max-h-72 object-cover lg:max-h-none lg:h-full" src="" alt="{{ $post->title }}">
     </div>
     <div class="flex flex-col items-start mt-5 space-y-5 lg:w-7/12 lg:mt-0 lg:ml-12">
-        <a href="" class="underline font-bold text-slate-900 text-lg">Catégorie</a>
+
+        @if ($post->category)
+            <a href="" class="underline font-bold text-slate-900 text-lg">{{ $post->category->name }}</a>
+        @endif
+
         <h1 class="font-bold text-slate-900 text-3xl lg:text-5xl leading-tight">{{ $post->title }}</h1>
-        <ul class="flex flex-wrap gap-2">
-            <li><a href="" class="px-3 py-1 bg-indigo-700 text-indigo-50 rounded-full text-sm">Tag 1</a></li>
-            <li><a href="" class="px-3 py-1 bg-indigo-700 text-indigo-50 rounded-full text-sm">Tag 2</a></li>
-        </ul>
+
+        @if ($post->tags->isNotEmpty())
+            <ul class="flex flex-wrap gap-2">
+                @foreach ($post->tags as $tag)
+                    <li><a href="" class="px-3 py-1 bg-indigo-700 text-indigo-50 rounded-full text-sm">{{ $tag->name }}</a></li>
+                @endforeach
+            </ul>
+        @endif
+
         <p class="text-xl lg:text-2xl text-slate-600">
             @if ($list)
                 {{ $post->excerpt }}
@@ -29,7 +38,7 @@
           </a>
         @else
           <time class="text-xs text-slate-500 mt-3" datetime="{{ $post->created_at }}">
-              {{ $post->created_at }}
+              @datetime($post->created_at)
           </time>
         @endif
     </div>
