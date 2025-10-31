@@ -11,6 +11,19 @@ use Illuminate\Support\Str;
  */
 class PostFactory extends Factory
 {
+    private function generatePlaceholdImage(string $sentence): string {
+        $width = 640;   // fake()->numberBetween(600, 1200);
+        $height = 480;  // fake()->numberBetween(400, 800);
+        $backgroundColor = "EEE";
+        $textColor = substr(fake()->hexColor(), 1);
+        $font = 'lato';
+        $words = explode(' ', $sentence);  // Retourne un tableau de mots
+        $text = $words[0];  // Premier mot seulement
+        
+        return "https://placehold.co/{$width}x{$height}/{$backgroundColor}/{$textColor}?font={$font}&text={$text}";
+    }
+
+
     /**
      * Define the model's default state.
      *
@@ -27,7 +40,7 @@ class PostFactory extends Factory
             'slug' => Str::slug($title),
             'excerpt' => Str::limit($content, 150),
             'content' => $content,
-            'thumbnail' => fake()->imageUrl(),
+            'thumbnail' => $this->generatePlaceholdImage($title),
             'created_at' => $created_at,
             'updated_at' => $created_at,
         ];
