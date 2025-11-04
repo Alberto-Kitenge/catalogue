@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class PostController extends Controller
@@ -38,5 +41,20 @@ class PostController extends Controller
         return view('posts.show', [
             'post' => $post,
         ]);
+    }
+
+    public function comment(Post $post, Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'comment' => ['required', 'string', 'between:2,255'],
+        ]);
+
+        Comment::create([
+            'content' => $validated['comment'],
+            'post_id' => $post->id,
+            'user_id' => Auth::id(),
+        ]);
+
+        return back()->with('success', 'Commentaire publié !');
     }
 }

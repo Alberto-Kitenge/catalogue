@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
@@ -30,8 +31,20 @@ Route::get('/home', [HomeController::class, 'index'])
     ->middleware('auth')
     ->name('home');
 
+Route::patch('/home', [HomeController::class, 'updatePassword'])
+    ->middleware('auth');
+
+
+Route::resource('/admin/posts', AdminController::class)
+    ->middleware('admin')
+    ->except('show')
+    ->names('admin.posts');
+
 
 Route::get('/', [PostController::class, 'index'])->name('index');
 Route::get('/categories/{category:slug}', [PostController::class, 'postsByCategory'])->name('posts.byCategory');
 Route::get('/tags/{tag:slug}', [PostController::class, 'postsByTag'])->name('posts.byTag');
 Route::get('/{post:slug}', [PostController::class, 'show'])->name('posts.show');
+Route::post('/{post:slug}/comment', [PostController::class, 'comment'])
+    ->middleware('auth')
+    ->name('posts.comment');

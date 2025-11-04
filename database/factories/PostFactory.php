@@ -17,10 +17,10 @@ class PostFactory extends Factory
         $backgroundColor = "EEE";
         $textColor = substr(fake()->hexColor(), 1);
         $font = 'lato';
-        $words = explode(' ', $sentence);  // Retourne un tableau de mots
-        $text = $words[0];  // Premier mot seulement
+        $wordsTableau = explode(' ', $sentence);  // Retourne un tableau de mots
+        $firstWord = $wordsTableau[0];  // Premier mot seulement
         
-        return "https://placehold.co/{$width}x{$height}/{$backgroundColor}/{$textColor}?font={$font}&text={$text}";
+        return "https://placehold.co/{$width}x{$height}/{$backgroundColor}/{$textColor}?font={$font}&text={$firstWord}";
     }
 
 

@@ -34,6 +34,6 @@ class RegisterController extends Controller
         Auth::login($user);
 
         // return redirect()->route('home')->withStatus('Inscription réussie');
-        return redirect()->route('home')->with('status', 'Inscription réussie');
+        return redirect()->route('home')->with('success', 'Inscription réussie');
     }
 }
